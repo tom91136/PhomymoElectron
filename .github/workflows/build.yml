@@ -99,13 +99,13 @@ jobs:
               -v "$PWD/dist:/dist" \
               -e APP_BIN="$APP_BIN" \
               "$CONTAINER_IMAGE" \
-              bash -lc 'set -euo pipefail; apt-get update; DEBIAN_FRONTEND=noninteractive apt-get install -y /dist/*.deb xvfb libasound2 libgbm1; xvfb-run -a "$APP_BIN" --no-sandbox --disable-setuid-sandbox --version'
+              bash -lc 'set -euo pipefail; apt-get update; DEBIAN_FRONTEND=noninteractive apt-get install -y /dist/*.deb xvfb libasound2 libgbm1 dbus-x11; timeout 120s dbus-run-session -- xvfb-run -a "$APP_BIN" --no-sandbox --disable-setuid-sandbox --version'
           else
             docker run --rm \
               -v "$PWD/dist:/dist" \
               -e APP_BIN="$APP_BIN" \
               "$CONTAINER_IMAGE" \
-              bash -lc 'set -euo pipefail; dnf -y install /dist/*.rpm xorg-x11-server-Xvfb alsa-lib mesa-libgbm; xvfb-run -a "$APP_BIN" --no-sandbox --disable-setuid-sandbox --version'
+              bash -lc 'set -euo pipefail; dnf -y install /dist/*.rpm xorg-x11-server-Xvfb alsa-lib mesa-libgbm dbus-daemon; timeout 120s dbus-run-session -- xvfb-run -a "$APP_BIN" --no-sandbox --disable-setuid-sandbox --version'
           fi
 
   smoke-test-appimage:
@@ -138,7 +138,7 @@ jobs:
           set -euo pipefail
           APPIMAGE="$(ls dist/*.AppImage | head -n 1)"
           chmod +x "$APPIMAGE"
-          APPIMAGE_EXTRACT_AND_RUN=1 xvfb-run -a "$APPIMAGE" --version
+          APPIMAGE_EXTRACT_AND_RUN=1 timeout 120s dbus-run-session -- xvfb-run -a "$APPIMAGE" --version
 
   release:
     runs-on: ubuntu-latest
