@@ -5,3 +5,4 @@ dist-electron/
 .electron-builder-cache/
 vendor/phomymo/
 vendor/.phomymo-tmp/
+assets/icon.png

@@ -12,6 +12,8 @@
   "scripts": {
     "sync:phomymo": "bash ./sync-phomymo.sh",
     "postinstall": "npm run sync:phomymo",
+    "build:icon": "node ./generate-icon.mjs",
+    "prebuild:main": "npm run build:icon",
     "build:main": "tsc -p tsconfig.json",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -28,13 +30,14 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.37.0",
+    "@types/node": "^24.3.0",
     "electron": "^40.8.0",
     "electron-builder": "^26.8.1",
     "eslint": "^9.37.0",
     "prettier": "^3.6.2",
+    "sharp": "^0.34.5",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.1",
-    "@types/node": "^24.3.0"
+    "typescript-eslint": "^8.46.1"
   },
   "build": {
     "appId": "net.affordablemagic.phomymo",
@@ -52,10 +55,12 @@
     "files": [
       "dist-electron/**/*",
       "vendor/phomymo/src/web/**/*",
+      "assets/icon.png",
       "package.json"
     ],
     "linux": {
       "maintainer": "Phomymo Electron Maintainers <maintainers@example.com>",
+      "icon": "assets/icon.png",
       "target": [
         "rpm",
         "deb",

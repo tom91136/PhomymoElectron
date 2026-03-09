@@ -16,12 +16,14 @@ function shouldOpenExternally(urlString: string): boolean {
 }
 
 function createWindow(): void {
+  const appIconPath = path.join(app.getAppPath(), 'assets', 'icon.png');
   const win = new BrowserWindow({
     width: 1400,
     height: 900,
     minWidth: 980,
     minHeight: 720,
     autoHideMenuBar: true,
+    icon: appIconPath,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
