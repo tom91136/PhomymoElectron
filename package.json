@@ -19,6 +19,8 @@
     "format:check": "prettier --check .",
     "start": "npm run build:main && electron .",
     "dist:rpm": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --linux rpm",
+    "dist:deb": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --linux deb",
+    "dist:appimage": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --linux AppImage",
     "dist:linux": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --linux"
   },
   "config": {
@@ -40,7 +42,7 @@
     "electronLanguages": [
       "en-US"
     ],
-    "afterPack": "./scripts/after-pack-prune.mjs",
+    "afterPack": "./electron-prune.mjs",
     "npmArgs": [
       "--silent"
     ],
@@ -55,7 +57,9 @@
     "linux": {
       "maintainer": "Phomymo Electron Maintainers <maintainers@example.com>",
       "target": [
-        "rpm"
+        "rpm",
+        "deb",
+        "AppImage"
       ],
       "category": "Utility"
     }
