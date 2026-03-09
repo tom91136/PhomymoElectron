@@ -1,0 +1,63 @@
+{
+  "name": "phomymo-electron",
+  "version": "0.1.0",
+  "description": "Desktop wrapper for Phomymo with WebUSB/WebSerial support",
+  "homepage": "https://github.com/transcriptionstream/phomymo",
+  "main": "dist-electron/main.js",
+  "author": {
+    "name": "Phomymo Electron Maintainers",
+    "email": "maintainers@example.com"
+  },
+  "license": "MIT",
+  "scripts": {
+    "sync:phomymo": "bash ./sync-phomymo.sh",
+    "postinstall": "npm run sync:phomymo",
+    "build:main": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "start": "npm run build:main && electron .",
+    "dist:rpm": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --linux rpm",
+    "dist:linux": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --linux"
+  },
+  "config": {
+    "phomymoCommit": "4cdca31391d01e7c260d7a70137a3a9a1d0ec3b6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.37.0",
+    "electron": "^40.8.0",
+    "electron-builder": "^26.8.1",
+    "eslint": "^9.37.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.1",
+    "@types/node": "^24.3.0"
+  },
+  "build": {
+    "appId": "net.affordablemagic.phomymo",
+    "productName": "Phomymo",
+    "electronLanguages": [
+      "en-US"
+    ],
+    "afterPack": "./scripts/after-pack-prune.mjs",
+    "npmArgs": [
+      "--silent"
+    ],
+    "npmRebuild": false,
+    "nodeGypRebuild": false,
+    "buildDependenciesFromSource": false,
+    "files": [
+      "dist-electron/**/*",
+      "vendor/phomymo/src/web/**/*",
+      "package.json"
+    ],
+    "linux": {
+      "maintainer": "Phomymo Electron Maintainers <maintainers@example.com>",
+      "target": [
+        "rpm"
+      ],
+      "category": "Utility"
+    }
+  }
+}

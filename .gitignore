@@ -1,0 +1,7 @@
+node_modules/
+dist/
+dist-electron/
+.electron-cache/
+.electron-builder-cache/
+vendor/phomymo/
+vendor/.phomymo-tmp/
