@@ -18,10 +18,10 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "start": "npm run build:main && electron .",
-    "dist:rpm": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --linux rpm",
-    "dist:deb": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --linux deb",
-    "dist:appimage": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --linux AppImage",
-    "dist:linux": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --linux"
+    "dist:rpm": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --publish never --linux rpm",
+    "dist:deb": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --publish never --linux deb",
+    "dist:appimage": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --publish never --linux AppImage",
+    "dist:linux": "npm run build:main && ELECTRON_CACHE=$PWD/.electron-cache ELECTRON_BUILDER_CACHE=$PWD/.electron-builder-cache electron-builder --publish never --linux"
   },
   "config": {
     "phomymoCommit": "4cdca31391d01e7c260d7a70137a3a9a1d0ec3b6"
