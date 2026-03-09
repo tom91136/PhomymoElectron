@@ -99,7 +99,7 @@ jobs:
               -v "$PWD/dist:/dist" \
               -e APP_BIN="$APP_BIN" \
               "$CONTAINER_IMAGE" \
-              bash -lc 'set -euo pipefail; apt-get update; DEBIAN_FRONTEND=noninteractive apt-get install -y /dist/*.deb; timeout 60s env ELECTRON_RUN_AS_NODE=1 "$APP_BIN" -e "process.stdout.write(process.versions.electron + \"\\n\")"'
+              bash -lc 'set -euo pipefail; apt-get update; DEBIAN_FRONTEND=noninteractive apt-get install -y /dist/*.deb libgbm1; if apt-cache show libasound2t64 >/dev/null 2>&1; then DEBIAN_FRONTEND=noninteractive apt-get install -y libasound2t64; else DEBIAN_FRONTEND=noninteractive apt-get install -y libasound2; fi; timeout 60s env ELECTRON_RUN_AS_NODE=1 "$APP_BIN" -e "process.stdout.write(process.versions.electron + \"\\n\")"'
           else
             docker run --rm \
               -v "$PWD/dist:/dist" \
