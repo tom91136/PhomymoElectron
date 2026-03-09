@@ -55,18 +55,35 @@ app.whenReady().then(() => {
   const ses = session.defaultSession;
 
   ses.setPermissionCheckHandler((_webContents, permission: string) => {
-    if (permission === 'usb' || permission === 'serial') {
+    if (
+      permission === 'usb' ||
+      permission === 'serial' ||
+      permission === 'bluetooth' ||
+      permission === 'bluetoothScanning'
+    ) {
       return true;
     }
     return false;
   });
 
   ses.setPermissionRequestHandler((_webContents, permission: string, callback) => {
-    if (permission === 'usb' || permission === 'serial') {
+    if (
+      permission === 'usb' ||
+      permission === 'serial' ||
+      permission === 'bluetooth' ||
+      permission === 'bluetoothScanning'
+    ) {
       callback(true);
       return;
     }
     callback(false);
+  });
+
+  ses.setDevicePermissionHandler((details) => {
+    if (details.deviceType === 'usb' || details.deviceType === 'serial') {
+      return true;
+    }
+    return false;
   });
 
   ses.on('select-usb-device', (event, details, callback) => {
@@ -76,6 +93,23 @@ app.whenReady().then(() => {
       return;
     }
     callback('');
+  });
+
+  const sesEventEmitter = ses as unknown as {
+    on: (eventName: string, listener: (...args: unknown[]) => void) => void;
+  };
+
+  sesEventEmitter.on('select-bluetooth-device', (event, deviceList, callback) => {
+    const selectEvent = event as { preventDefault: () => void };
+    const devices = deviceList as Array<{ deviceId: string }>;
+    const selectCallback = callback as (deviceId: string) => void;
+
+    selectEvent.preventDefault();
+    if (devices.length > 0) {
+      selectCallback(devices[0].deviceId);
+      return;
+    }
+    selectCallback('');
   });
 
   ses.setUSBProtectedClassesHandler(() => {
