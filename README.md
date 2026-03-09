@@ -34,7 +34,7 @@ Requirements:
 - npm
 - RPM tooling:
   - Ubuntu/Debian: `rpm` (`sudo apt-get install -y rpm`)
-  - Fedora: `rpm-build` (`sudo dnf install -y rpm-build`)
+  - Fedora: `rpm-build`. `libxcrypt-compat` (`sudo dnf install -y rpm-build libxcrypt-compat`)
 - DEB tooling:
   - Ubuntu/Debian: `dpkg`/`dpkg-deb` (normally preinstalled)
 
